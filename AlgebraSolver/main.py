@@ -3,7 +3,7 @@ import os
 import re
 
 # Go through, then cleanup and add error codes! (After completed) #
-def fixvar(var):
+def fix_equation(var):
     if len(re.findall(r'\b(x)\b', var)) > 0:
         var = re.sub(r'\b(x)\b', '1x', var)
         if len(re.findall(r'\b(y)\b', var)) > 0:
@@ -14,37 +14,33 @@ def fixvar(var):
 def error(n):
     # Executes When error and points to error location
     print(f'\nError {n}')
-    time.sleep(1)
     print('\nAn error has occured.')
-    time.sleep(1)
-    print('Resetting program...')
-    time.sleep(5)
-    os.system('clear')
+    input('Resetting program on enter key press...')
     main()
     exit(1)
 
 
 def multiplication(var):
     if len(re.findall(r'\s\*\s', var)) > 0:
-        meq_var = str(re.findall(r'\b([^\s]+)\s\*\s([^\s]+)\b', var)).replace('[(', '').replace(')]', '').replace("'", '').split(', ')
+        multiplcation_equation_variable = str(re.findall(r'\b([^\s]+)\s\*\s([^\s]+)\b', var)).replace('[(', '').replace(')]', '').replace("'", '').split(', ')
         x_or_y_found = r"\b\d*([^\d]+)\b"
-        if len(re.findall(x_or_y_found, meq_var[0])) > 0:
-            if len(re.findall(x_or_y_found, meq_var[1])) > 0:
-                var_0_vs = re.findall(x_or_y_found, meq_var[0])[0]
-                var_1_vs = re.findall(x_or_y_found, meq_var[1])[0]
-                var_0_nval = re.findall(r'\b(\d*)', meq_var[0])[0]
-                var_1_nval = re.findall(r'\b(\d*)', meq_var[1])[0]
-                meq = re.findall(r'(\b[^\s]+\s\*\s[^\s]+\s)', var)[0]
+        if len(re.findall(x_or_y_found, multiplcation_equation_variable[0])) > 0:
+            if len(re.findall(x_or_y_found, multiplcation_equation_variable[1])) > 0:
+                variable_0_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[0])[0]
+                variable_1_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[1])[0]
+                variable_0_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[0])[0]
+                variable_1_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[1])[0]
+                multiplication_equation = re.findall(r'(\b[^\s]+\s\*\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                    var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) * int(var_1_nval)) + var_0_vs + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) * int(var_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
                 elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
                     var = var[:var.find(meq)] + str(int(var_0_nval) * int(var_1_nval)) + var_0_vs + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
                     return var
             else:
-                var_0_vs = re.findall(x_or_y_found, meq_var[0])[0]
-                var_1_nval = re.findall(r'\b(\d*)', meq_var[1])[0]
-                var_0_nval = re.findall(r'\b(\d*)', meq_var[0])[0]
+                var_0_vs = re.findall(x_or_y_found, multiplcation_equation_variable[0])[0]
+                var_0_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[0])[0]
+                var_1_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[1])[0]
                 meq = re.findall(r'(\b[^\s]+\s\*\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
                     var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) * int(var_1_nval)) + var_0_vs + ' ' + var[var.find(meq) + len(meq):]
@@ -373,7 +369,7 @@ def main():
         time.sleep(1)
         if '=' in eq:
             split_eq = eq.split('=')
-            eq = fixvar(eq)
+            eq = fix_equation(eq)
             print('eq')
             print(eq, '\n')
             time.sleep(1)
@@ -386,19 +382,13 @@ def main():
 
         else:
             # Executes When There Is An Error With Formatting
-            print('\nPlease follow the correct formatting structure.')
-            time.sleep(1)
-            print('If your equation has only one variable, make sure the variable is set to "x".')
-            time.sleep(1)
-            print('If it is a two variable equation set one variable to "x" and one to "y".')
-            time.sleep(1)
-            print('There cannot be a space inbetween the chevron and your equation.')
-            time.sleep(1)
-            print('If you wish to exit the program type "quit".')
-            time.sleep(1)
-            print('Resetting program...')
-            time.sleep(5)
-            os.system('clear')
+            print_statment = '''\nPlease follow the correct formatting structure. 
+            If your equation has only one variable, make sure the variable is set to "x". 
+            If it is a two variable equation set one variable to "x" and one to "y".
+            There cannot be a space inbetween the chevron and your equation.
+            If you wish to exit the program type "quit".
+            Resetting program...'''
+            input(print_statment)
             main()
             exit(1)
 
