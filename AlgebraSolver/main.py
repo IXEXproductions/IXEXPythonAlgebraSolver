@@ -170,36 +170,36 @@ def exponents(var):
 def number_mover(var, split_var):
     # Checks if there are numebers not attatched to a x or y variable on the left side of the "="
     if len(re.findall(r"\b\d+\b", split_var[0])) > 0:
-        inval = int(re.findall(r'\b(\d+)\b', split_var[0])[0])
-        snval = str(re.findall(r'\b(\d+)\b', split_var[0])[0])
+        integer_variable = int(re.findall(r'\b(\d+)\b', split_var[0])[0])
+        string_variable = str(re.findall(r'\b(\d+)\b', split_var[0])[0])
         if len(split_var[1]) == 0:
-            if inval == 0:
+            if integer_variable == 0:
                 # Removes the current value on the left
-                var = var[:var.find(snval)] + var[var.find(snval) + len(snval):]
+                var = var[:var.find(string_variable)] + var[var.find(string_variable) + len(string_variable):]
                 print(var)
                 # Adds the the value to the other side
-                var = var[var.find('='):] + ' ' + snval + ' ' + var[:var.find('=')]
+                var = var[var.find('='):] + ' ' + string_variable + ' ' + var[:var.find('=')]
                 return var
-            elif inval != 0:
+            elif integer_variable != 0:
                 # Removes the current value on the left
-                var = var[:var.find(snval)] + var[var.find(snval) + len(snval):]
+                var = var[:var.find(string_variable)] + var[var.find(string_variable) + len(string_variable):]
                 # Adds the opposite of the value to the other side
-                var = var[var.find('='):] + ' -' + snval + ' ' + var[:var.find('=')]
+                var = var[var.find('='):] + ' -' + string_variable + ' ' + var[:var.find('=')]
                 return var
             else:
                 error()
         elif len(split_var[1]) > 0:
-            if inval == 0:
+            if integer_variable == 0:
                 # Removes the current value on the left
-                var = var[:var.find(snval)] + var[var.find(snval) + len(snval):]
+                var = var[:var.find(string_variable)] + var[var.find(string_variable) + len(string_variable):]
                 # Adds the the value to the other side
-                var = var[var.find('='):] + ' ' + snval + ' ' + var[:var.find('=')]
+                var = var[var.find('='):] + ' ' + string_variable + ' ' + var[:var.find('=')]
                 return var
-            elif inval != 0:
+            elif integer_variable != 0:
                 # Removes the current value on the left
-                var = var[:var.find(snval)] + var[var.find(snval) + len(snval):]
+                var = var[:var.find(string_variable)] + var[var.find(string_variable) + len(string_variable):]
                 # Adds the opposite of the value to the other side
-                var = var[var.find('='):] + ' - ' + snval + ' ' + var[:var.find('=')]
+                var = var[var.find('='):] + ' - ' + string_variable + ' ' + var[:var.find('=')]
                 return var
             else:
                 error()
@@ -209,24 +209,24 @@ def number_mover(var, split_var):
     # Checks if there are negative numebers not attatched to a x or y variable on the left side of the "="
     elif len(re.findall(r"\b-\d+\b", split_var[0])) > 0:
         if len(split_var[1]) == 0:
-            if inval == 0:
+            if integer_variable == 0:
                 error(-0)
-            elif inval != 0:
+            elif integer_variable != 0:
                 # Removes the current value on the left
-                var = var[:var.find(snval)] + var[var.find(snval) + len(snval):]
+                var = var[:var.find(string_variable)] + var[var.find(string_variable) + len(string_variable):]
                 # Adds the opposite of the value to the other side
-                var = var[var.find('='):] + ' -' + snval + ' ' + var[:var.find('=')]
+                var = var[var.find('='):] + ' -' + string_variable + ' ' + var[:var.find('=')]
                 return var
             else:
                 error()
         elif len(split_var[1]) > 0:
-            if inval == 0:
+            if integer_variable == 0:
                 error(-0)
-            elif inval != 0:
+            elif integer_variable != 0:
                 # Removes the current value on the left
-                var = var[:var.find(snval)] + var[var.find(snval) + len(snval):]
+                var = var[:var.find(string_variable)] + var[var.find(string_variable) + len(string_variable):]
                 # Adds the opposite of the value to the other side
-                var = var[var.find('='):] + '+ -' + snval + ' ' + var[:var.find('=')]
+                var = var[var.find('='):] + '+ -' + string_variable + ' ' + var[:var.find('=')]
                 return var
             else:
                 error()
@@ -248,10 +248,9 @@ def x_mover(var, split_var):
             if len(re.findall(neg_x_or_y, re.sub(r"[0-9]", '', split_var[1])))[0]:
                 if len(split_var[0]) == 0:
                     # Strings of x value
-                    xyvar = re.findall(r"(-\b\d*\b)", split_var[1])[0]
-                    xyval = re.findall(r"-\b(\d*)\bx", split_var[1])[0]
+                    xy_variable = re.findall(r"(-\b\d*\b)", split_var[1])[0]
                     # Removes the current "x" value on the right
-                    var = var[:var.find(xyvar)] + ' ' +  var[var.find(xyvar) + len(xyvar):]
+                    var = var[:var.find(xy_variable)] + ' ' +  var[var.find(xy_variable) + len(xy_variable):]
                     # Adds the opposite of the "x" value to the other side
                     var = var[:var.find('=')] + ' ' + xval + 'x ' + var[var.find('='):]
                     return var
@@ -294,34 +293,34 @@ def x_mover(var, split_var):
                 return var
 
 
-def svx(var, split_var):
+def solve_x(var, split_var):
     xs = re.findall(r"\b([^\s]*-*\d*)x\b", split_var[0])
     str(xs).replace('(', '').replace(')', '').replace("'", '').replace(',', '')
     print(xs)
 
 
-def svxy(var, split_var):
+def solve_xy(var, split_var):
     pass
 
 
 def solve(var, split_var, original_var):
                 print('\nsolve initiated!\n')
                 # Solves the equation and returns the value of x and or y
-                p = len(re.findall(r'\((.+?)\)', var)) 
-                e = len(re.findall(r'\s(\*{2})\s', var))
-                m = len(re.findall(r'\s\*\s', var))
-                d = len(re.findall(r'\s\/\s', var))
-                while p and e and m and d > 0:
-                    if p > 0:
+                parantheses_check = len(re.findall(r'\((.+?)\)', var)) 
+                exponents_check = len(re.findall(r'\s(\*{2})\s', var))
+                multiplication_check = len(re.findall(r'\s\*\s', var))
+                division_check = len(re.findall(r'\s\/\s', var))
+                while parantheses_check and exponents_check and multiplication_check and division_check > 0:
+                    if parantheses_check > 0:
                         var = parantheses(var)
                         return var
-                    elif e > 0:
+                    elif exponents_check > 0:
                         var = exponents(var)
                         return var
-                    elif m > 0:
+                    elif multiplication_check > 0:
                         var = multiplication(var)
                         return var
-                    elif d > 0:
+                    elif division_check > 0:
                         var = division(var)
                         return var
                 
@@ -342,10 +341,10 @@ def solve(var, split_var, original_var):
                     print(len(re.findall('y', split_var[1])))
                     print(len(re.findall('x', split_var[1])))
                     if 'x' and 'y' in var:
-                        svxy(var, split_var)
+                        solve_x(var, split_var)
                         return var
                     elif 'x' in var:
-                        svx(var, split_var)
+                        solve_xy(var, split_var)
                         return var
                     else:
                         pass
