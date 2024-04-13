@@ -32,93 +32,93 @@ def multiplication(var):
                 variable_1_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[1])[0]
                 multiplication_equation = re.findall(r'(\b[^\s]+\s\*\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                    var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) * int(var_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                    var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
                 elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                    var = var[:var.find(meq)] + str(int(var_0_nval) * int(var_1_nval)) + var_0_vs + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
             else:
-                var_0_vs = re.findall(x_or_y_found, multiplcation_equation_variable[0])[0]
-                var_0_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[0])[0]
-                var_1_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[1])[0]
-                meq = re.findall(r'(\b[^\s]+\s\*\s[^\s]+\s)', var)[0]
+                variable_0_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[0])[0]
+                variable_0_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[0])[0]
+                variable_1_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[1])[0]
+                multiplication_equation = re.findall(r'(\b[^\s]+\s\*\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                    var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) * int(var_1_nval)) + var_0_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
                 elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                    var = var[:var.find(meq)] + str(int(var_0_nval) * int(var_1_nval)) + var_0_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
-        elif len(re.findall(x_or_y_found, meq_var[1])) > 0:
-            var_1_vs = re.findall(x_or_y_found, meq_var[1])[0]
-            var_0_nval = re.findall(r"\b(\d*)", meq_var[0])[0]
-            var_1_nval = re.findall(r"\b(\d*)", meq_var[1])[0]
-            meq = re.findall(r"(\b[^\s]+\s\*\s[^\s]+\s)", var)[0]
+        elif len(re.findall(x_or_y_found, multiplcation_equation_variable[1])) > 0:
+            variable_1_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[1])[0]
+            variable_0_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[0])[0]
+            variable_1_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[1])[0]
+            multiplication_equation = re.findall(r"(\b[^\s]+\s\*\s[^\s]+\s)", var)[0]
             if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) * int(var_1_nval)) + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
             elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                var = var[:var.find(meq)] + str(int(var_0_nval) * int(var_1_nval)) + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
         else:
-            var_0_nval = re.findall(r"\b(\d*)", meq_var[0])[0]
-            var_1_nval = re.findall(r"\b(\d*)", meq_var[1])[0]
-            meq = re.findall(r"(\b[^\s]+\s\*\s[^\s]+\s)", var)[0]
+            variable_0_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[0])[0]
+            variable_1_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[1])[0]
+            multiplication_equation = re.findall(r"(\b[^\s]+\s\*\s[^\s]+\s)", var)[0]
             if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) * int(var_1_nval)) + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) * int(variable_1_number_value)) + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
             elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                var = var[:var.find(meq)] + str(int(var_0_nval) * int(var_1_nval)) + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) * int(variable_1_number_value)) + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
 
 
 def division(var):
     if len(re.findall(r'\s\/\s', var)) > 0:
-        meq_var = str(re.findall(r'\b([^\s]+)\s\/\s([^\s]+)\b', var)).replace('[(', '').replace(')]', '').replace("'", '').split(', ')
+        multiplcation_equation_variable = str(re.findall(r'\b([^\s]+)\s\/\s([^\s]+)\b', var)).replace('[(', '').replace(')]', '').replace("'", '').split(', ')
         x_or_y_found = r"\b\d*([^\d]+)\b"
-        if len(re.findall(x_or_y_found, meq_var[0])) > 0:
-            if len(re.findall(x_or_y_found, meq_var[1])) > 0:
-                var_0_vs = re.findall(x_or_y_found, meq_var[0])[0]
-                var_1_vs = re.findall(x_or_y_found, meq_var[1])[0]
-                var_0_nval = re.findall(r'\b(\d*)', meq_var[0])[0]
-                var_1_nval = re.findall(r'\b(\d*)', meq_var[1])[0]
-                meq = re.findall(r'(\b[^\s]+\s\/\s[^\s]+\s)', var)[0]
+        if len(re.findall(x_or_y_found, multiplcation_equation_variable[0])) > 0:
+            if len(re.findall(x_or_y_found, multiplcation_equation_variable[1])) > 0:
+                variable_0_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[0])[0]
+                variable_1_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[1])[0]
+                variable_0_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[0])[0]
+                variable_1_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[1])[0]
+                multiplication_equation = re.findall(r'(\b[^\s]+\s\/\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                    var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) / int(var_1_nval)) + var_0_vs + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
                 elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                    var = var[:var.find(meq)] + str(int(var_0_nval) / int(var_1_nval)) + var_0_vs + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
             else:
-                var_0_vs = re.findall(x_or_y_found, meq_var[0])[0]
-                var_1_nval = re.findall(r'\b(\d*)', meq_var[1])[0]
-                var_0_nval = re.findall(r'\b(\d*)', meq_var[0])[0]
-                meq = re.findall(r'(\b[^\s]+\s\/\s[^\s]+\s)', var)[0]
+                variable_0_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[0])[0]
+                variable_1_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[1])[0]
+                variable_0_number_value = re.findall(r'\b(\d*)', multiplcation_equation_variable[0])[0]
+                multiplication_equation = re.findall(r'(\b[^\s]+\s\/\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                    var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) / int(var_1_nval)) + var_0_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
                 elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                    var = var[:var.find(meq)] + str(int(var_0_nval) / int(var_1_nval)) + var_0_vs + ' ' + var[var.find(meq) + len(meq):]
+                    var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                     return var
-        elif len(re.findall(x_or_y_found, meq_var[1])) > 0:
-            var_1_vs = re.findall(x_or_y_found, meq_var[1])[0]
-            var_0_nval = re.findall(r"\b(\d*)", meq_var[0])[0]
-            var_1_nval = re.findall(r"\b(\d*)", meq_var[1])[0]
-            meq = re.findall(r"(\b[^\s]+\s\/\s[^\s]+\s)", var)[0]
+        elif len(re.findall(x_or_y_found, multiplcation_equation_variable[1])) > 0:
+            variable_1_variable_string = re.findall(x_or_y_found, multiplcation_equation_variable[1])[0]
+            variable_0_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[0])[0]
+            variable_1_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[1])[0]
+            multiplication_equation = re.findall(r"(\b[^\s]+\s\/\s[^\s]+\s)", var)[0]
             if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) / int(var_1_nval)) + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
             elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                var = var[:var.find(meq)] + str(int(var_0_nval) / int(var_1_nval)) + var_1_vs + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
         else:
-            var_0_nval = re.findall(r"\b(\d*)", meq_var[0])[0]
-            var_1_nval = re.findall(r"\b(\d*)", meq_var[1])[0]
-            meq = re.findall(r"(\b[^\s]+\s\/\s[^\s]+\s)", var)[0]
+            variable_0_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[0])[0]
+            variable_1_number_value = re.findall(r"\b(\d*)", multiplcation_equation_variable[1])[0]
+            multiplication_equation = re.findall(r"(\b[^\s]+\s\/\s[^\s]+\s)", var)[0]
             if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                var = var[:var.find(meq)] + ' ' + str(int(var_0_nval) / int(var_1_nval)) + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
             elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                var = var[:var.find(meq)] + str(int(var_0_nval) / int(var_1_nval)) + ' ' + var[var.find(meq) + len(meq):]
+                var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
                 return var
             
 
