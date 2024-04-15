@@ -1,4 +1,3 @@
-import time
 import re
 
 # Go through, then cleanup and add error codes! (After completed) #
@@ -278,16 +277,13 @@ def main():
     print('Please enter an equation')
     eq = input('>').lower()
     original_eq = str(eq)
-    time.sleep(1)
     running = True
     while running:
-        time.sleep(1)
         if '=' in eq:
             split_eq = eq.split('=')
             eq = fix_equation(eq)
             print('eq')
             print(eq, '\n')
-            time.sleep(1)
             eq = solve(eq, split_eq, original_eq)
 
 
