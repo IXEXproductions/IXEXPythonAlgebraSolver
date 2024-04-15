@@ -1,5 +1,4 @@
 import time
-import os
 import re
 
 # Go through, then cleanup and add error codes! (After completed) #
@@ -197,44 +196,24 @@ def xy_mover(var, split_var):
             if len(re.findall(negative_x_or_y, re.sub(r"[0-9]", '', split_var[1])))[0]:
                 if len(split_var[0]) == 0:
                     xy_string = re.findall(r"(-\b\d\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-                    xy_variable = xy_value = re.findall(r"-\b\d\b" + negative_x_or_y, split_var[1])[0]
-                    xy_value = re.findall(r"-\b(\d)\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-                    # Removes the current "x" value on the right
-                    var = var[:var.find(xy_string)] + '' +  var[var.find(xy_string) + len(xy_string):]
-                    # Adds the opposite of the "x" value to the other side
-                    var = var[:var.find('=')] + '' + xy_value + xy_variable + ' ' + var[var.find('='):]
+                    var = re.sub(xy_string + r" =\s+(.*)", -int(xy_string) + ' =')
                     return var
                 
                 elif len(split_var[0]) > 0:
                     xy_string = re.findall(r"(-\b\d\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-                    xy_variable = xy_value = re.findall(r"-\b\d\b" + negative_x_or_y, split_var[1])[0]
-                    xy_value = re.findall(r"-\b(\d)\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-                    # Removes the current "x" value on the right
-                    var = var[:var.find(xy_string)] + ' ' +  var[var.find(xy_string) + len(xy_string):]
-                    # Adds the opposite of the "x" value to the other side
-                    var = var[:var.find('=')] + ' + ' + xy_value + xy_variable + ' ' + var[var.find('='):]
+                    var = re.sub(xy_string + r" =\s+(.*)", ' + ' + -int(xy_string) + ' =')
                     return var
                 
             # Checks if "x" is a positive value on the right side of the "="
             elif 'x' in split_var[1]:
                 if len(split_var[0]) == 0:
                     xy_string = re.findall(r"(-\b\d\b(?:" + x_or_y + r")", split_var[1])[0]
-                    xy_variable = xy_value = re.findall(r"-\b\d\b" + x_or_y, split_var[1])[0]
-                    xy_value = re.findall(r"-\b(\d)\b(?:" + x_or_y + r")", split_var[1])[0]
-                    # Removes the current "x" value on the right
-                    var = var[:var.find(xy_string)] + '' +  var[var.find(xy_string) + len(xy_string):]
-                    # Adds the opposite of the "x" value to the other side
-                    var = var[:var.find('=')] + '' + xy_value + xy_variable + ' ' + var[var.find('='):]
+                    var = re.sub(xy_string + r" =\s+(.*)", -int(xy_string) + ' =')
                     return var
                 
                 elif len(split_var[0]) > 0:
                     xy_string = re.findall(r"(-\b\d\b(?:" + x_or_y + r")", split_var[1])[0]
-                    xy_variable = xy_value = re.findall(r"-\b\d\b" + x_or_y, split_var[1])[0]
-                    xy_value = re.findall(r"-\b(\d)\b(?:" + x_or_y + r")", split_var[1])[0]
-                    # Removes the current "x" value on the right
-                    var = var[:var.find(xy_string)] + ' ' +  var[var.find(xy_string) + len(xy_string):]
-                    # Adds the opposite of the "x" value to the other side
-                    var = var[:var.find('=')] + ' + -' + xy_value + xy_variable + ' ' + var[var.find('='):]
+                    var = re.sub(xy_string + r" =\s+(.*)", ' + ' + -int(xy_string) + ' =')
                     return var
                 
                 else:
