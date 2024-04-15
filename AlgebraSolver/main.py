@@ -187,40 +187,31 @@ def number_mover(var, split_var):
 
 
 def xy_mover(var, split_var):
+
     x_or_y = r"(\bx\b|\by\b|\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b)"
     negative_x_or_y = r"(\b-x\b|\b-y\b|\b-x(?:[^\s]+)y\b|\b-y(?:[^\s]+)x\b|\b-x(?:[^\s]+)x\b|\b-y(?:[^\s]+)y\b|\b-xy\b|\b-yx\b)"
-    if len(re.findall(x_or_y, var)) > 0:
-        if len(re.findall(x_or_y, split_var[1])) > 0:
-            print('looking for x')
-            # Checks if "x" is a negative value on the right side of the "="
-            if len(re.findall(negative_x_or_y, re.sub(r"[0-9]", '', split_var[1])))[0]:
-                if len(split_var[0]) == 0:
-                    xy_string = re.findall(r"(-\b\d\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-                    var = re.sub(xy_string + r" =\s+(.*)", -int(xy_string) + ' =')
-                    return var
-                
-                elif len(split_var[0]) > 0:
-                    xy_string = re.findall(r"(-\b\d\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-                    var = re.sub(xy_string + r" =\s+(.*)", ' + ' + -int(xy_string) + ' =')
-                    return var
-                
-            # Checks if "x" is a positive value on the right side of the "="
-            elif 'x' in split_var[1]:
-                if len(split_var[0]) == 0:
-                    xy_string = re.findall(r"(-\b\d\b(?:" + x_or_y + r")", split_var[1])[0]
-                    var = re.sub(xy_string + r" =\s+(.*)", -int(xy_string) + ' =')
-                    return var
-                
-                elif len(split_var[0]) > 0:
-                    xy_string = re.findall(r"(-\b\d\b(?:" + x_or_y + r")", split_var[1])[0]
-                    var = re.sub(xy_string + r" =\s+(.*)", ' + ' + -int(xy_string) + ' =')
-                    return var
-                
-                else:
-                    return var  
-                
-            else: 
-                return var
+   
+    if len(re.findall(x_or_y, split_var[1])) > 0:
+
+        print('looking for x/y')
+
+        xy_string = re.findall(r"(-\b\d\b(?:" + negative_x_or_y + r")", split_var[1])[0]
+        xy_variable = re.findall(r"-\b\d\b" + negative_x_or_y, split_var[1])[0]
+        xy_value = re.findall(r"-\b(\d)\b(?:" + negative_x_or_y + r")", split_var[1])[0]
+
+        if len(split_var[0]) == 0:
+            var = re.sub(xy_string + r" =\s+(.*)", ' ')
+            var = re.sub(r"=", -int(xy_value) + xy_variable + " =")
+            return var
+        
+        elif len(split_var[0]) > 0:
+            var = re.sub(xy_string + r" =\s+(.*)", ' ')
+            var = re.sub(r"=",' + ' + -int(xy_value) + xy_variable + " =")
+            return var
+
+        
+        else:
+            return var
 
 
 def solve_xy(var, split_var):
