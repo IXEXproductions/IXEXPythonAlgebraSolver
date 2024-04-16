@@ -1,4 +1,3 @@
-import time
 import re
 
 # Go through, then cleanup and add error codes! (After completed) #
@@ -224,10 +223,11 @@ def solve_xy(var, split_var):
         counter += 1
         for i in x_or_y_string_list[counter]:
             x_or_y_found = re.findall(r"(x|y)", x_or_y_long_string_list[counter])[counter]
-            variable_value = re.findall(r"-*\d*(?:x|y)", x_or_y_string_list)[0]
-            var = re.sub(x_or_y_found[counter], variable_value)
-
-    return var
+            variable_value = re.findall(r"-*\d*(x|y)", x_or_y_found)
+            digit_value = re.findall(r"(-*\d*)(?:x|y)", x_or_y_string_list)[0]
+            var = re.sub(x_or_y_found[counter - 1], digit_value + variable_value)
+    print(var)
+    #return var
 
             
     #x_or_y_long_string_list_list[counter]
@@ -278,16 +278,13 @@ def main():
     print('Please enter an equation')
     eq = input('>').lower()
     original_eq = str(eq)
-    time.sleep(1)
     running = True
     while running:
-        time.sleep(1)
         if '=' in eq:
             split_eq = eq.split('=')
             eq = fix_equation(eq)
             print('eq')
             print(eq, '\n')
-            time.sleep(1)
             eq = solve(eq, split_eq, original_eq)
 
 
