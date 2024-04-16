@@ -81,10 +81,10 @@ def division(var):
                 variable_1_number_value = re.findall(r'\b(\d*)', division_equation_variable[1])[0]
                 division_equation = re.findall(r'(\b[^\s]+\s\/\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                    var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                    var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(division_equation) + len(division_equation):]
                     return var
                 elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                    var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                    var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(division_equation) + len(division_equation):]
                     return var
             else:
                 variable_0_variable_string = re.findall(x_or_y_found, division_equation_variable[0])[0]
@@ -92,10 +92,10 @@ def division(var):
                 variable_0_number_value = re.findall(r'\b(\d*)', division_equation_variable[0])[0]
                 division_equation = re.findall(r'(\b[^\s]+\s\/\s[^\s]+\s)', var)[0]
                 if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                    var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                    var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(division_equation) + len(division_equation):]
                     return var
                 elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                    var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                    var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + ' ' + var[var.find(division_equation) + len(division_equation):]
                     return var
         elif len(re.findall(x_or_y_found, division_equation_variable[1])) > 0:
             variable_1_variable_string = re.findall(x_or_y_found, division_equation_variable[1])[0]
@@ -103,20 +103,20 @@ def division(var):
             variable_1_number_value = re.findall(r"\b(\d*)", division_equation_variable[1])[0]
             division_equation = re.findall(r"(\b[^\s]+\s\/\s[^\s]+\s)", var)[0]
             if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(division_equation) + len(division_equation):]
                 return var
             elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_1_variable_string + ' ' + var[var.find(division_equation) + len(division_equation):]
                 return var
         else:
             variable_0_number_value = re.findall(r"\b(\d*)", division_equation_variable[0])[0]
             variable_1_number_value = re.findall(r"\b(\d*)", division_equation_variable[1])[0]
             division_equation = re.findall(r"(\b[^\s]+\s\/\s[^\s]+\s)", var)[0]
             if len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) == 0:
-                var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                var = var[:var.find(division_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + ' ' + var[var.find(division_equation) + len(division_equation):]
                 return var
             elif len(re.findall(r'(\s[^\s]+\s*\s[^\s]+\s)', var)) > 0:
-                var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
+                var = var[:var.find(division_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + ' ' + var[var.find(division_equation) + len(division_equation):]
                 return var
             
 
