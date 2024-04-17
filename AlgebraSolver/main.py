@@ -208,33 +208,60 @@ def xy_mover(var, split_var):
         return var
 
 
-def solve_xy(var, split_var):
+def eval_x_and_or_y(var, split_var):
     x_or_y = r"(\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b|\bx\b|\by\b)"
-
-    x_or_y_string_list = re.findall(r"\b(-*\d*)\b" + x_or_y, split_var[0])
-    x_or_y_string_list= str(x_or_y_string_list).replace('(', '').replace(')', '').replace("'", '').split(',')
-
-    x_or_y_long_string = r"(\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b)"
+    long_x_or_y = r"(\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b)"
+    xy_string = re.findall(r"\b(-*\d*)\b" + x_or_y, split_var[0])
+    original_xy_string = str(xy_string)
+    xy_string = str(xy_string).replace('(', '').replace(')', '').replace("'", '').split(',')
     
-    x_or_y_long_string_list = re.findall(r"\b(-*\d*)\b" + x_or_y, split_var[0])
-    x_or_y_long_string_list= str(x_or_y_string_list).replace('(', '').replace(')', '').replace("'", '').split(',')
+    if 'x' and 'y' in xy_string:
+        for list_object in x_or_y:
+            for i in xy_string[list_object]:
+                x_storage = re.findall(r"(x)", xy_string[list_object])[i]
+                x_storage = len(x_storage)
+                y_storage = re.findall(r"(y)", xy_string[list_object])[i]
+                y_storage = len(y_storage)
+            digit_storage = re.findall(r"\b(-*\d*)\b" , xy_string[list_object])[0]
+            digit_storage = int(digit_storage)
+            xy_string[list_object] = f"{digit_storage + x_storage}x * {digit_storage + y_storage}y"
+        temp_storage = re.findall(r"\b(-*\d*)\b" + x_or_y, xy_string)
+        for list_object in temp_storage:
+            if 'x' in temp_storage[list_object]:
+                digit_storage = re.findall(r"\b(-*\d*)\b" , temp_storage[list_object])[0]
+                digit_storage = int(digit_storage)
+                x_storage = x_storage + digit_storage
+            elif 'y' in temp_storage[list_object]:
+                digit_storage = re.findall(r"\b(-*\d*)\b" , temp_storage[list_object])[0]
+                digit_storage = int(digit_storage)
+                y_storage = y_storage + digit_storage
+        if len(re.findall(long_x_or_y, original_xy_string)) > 0:
+            xy_string = f"{x_storage}x * {y_storage}y"
+        else:
+            xy_string = f"{x_storage}x + {y_storage}y"
+        split_var[0] = xy_string
+        var = split_var[0] + split_var[1]
+        return var
 
-    for i in x_or_y_long_string_list:
-        counter += 1
-        for i in x_or_y_string_list[counter]:
-            x_or_y_found = re.findall(r"(x|y)", x_or_y_long_string_list[counter])[counter]
-            variable_value = re.findall(r"-*\d*(x|y)", x_or_y_found)
-            digit_value = re.findall(r"(-*\d*)(?:x|y)", x_or_y_string_list)[0]
-            var = re.sub(x_or_y_found[counter - 1], digit_value + variable_value)
-    print(var)
+    elif 'x' in xy_string:
+        for list_object in x_or_y:
+            for i in xy_string[list_object]:
+                x_storage = re.findall(r"(x)", xy_string[list_object])[i]
+                x_storage = len(x_storage)
+            digit_storage = re.findall(r"\b(-*\d*)\b" , xy_string[list_object])[0]
+            digit_storage = int(digit_storage)
+            xy_string[list_object] = f"{digit_storage + x_storage}x"
+        split_var[0] = xy_string
+        var = split_var[0] + split_var[1]
+        return var
+    
+    else:
+        error(1)
+
+def solve_xy(var, split_var):
+    var = eval_x_and_or_y(var, split_var)
+    print(f"var = {var}")
     #return var
-
-            
-    #x_or_y_long_string_list_list[counter]
-    #re.findall(r"\b[^\s][^\w]x[^\s][^\w]\b", x_or_y_string_list)
-    #re.findall(r"\b[^\s][^\w]y[^\s][^\w]\b", x_or_y_string_list)
-
-    
 
 
 def solve(var, split_var, original_var):
