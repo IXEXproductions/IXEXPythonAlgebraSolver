@@ -18,6 +18,24 @@ def error(n):
     exit(1)
 
 
+def find_all_x_or_y(string):
+    all_x_or_y_in_string = ''
+    for charecter in string:
+        if charecter == 'x' or 'y':
+            all_x_or_y_in_string = all_x_or_y_in_string + charecter
+    return all_x_or_y_in_string
+
+
+def find_all_numbers(string):
+    numbers = ''
+    for charecter in string:
+        if charecter == '-':
+            numbers = numbers + charecter
+        elif charecter.isdigit():
+            numbers = numbers + charecter
+    return numbers
+
+
 def multiplication(var):
     if len(re.findall(r'\s\*\s', var)) > 0:
         multiplcation_equation_variable = str(re.findall(r'\b([^\s]+)\s\*\s([^\s]+)\b', var)).replace('[(', '').replace(')]', '').replace("'", '').split(', ')
@@ -187,25 +205,31 @@ def number_mover(var, split_var):
 
 def xy_mover(var, split_var):
     print('looking for x/y')
-    x_or_y = r"(?:\bx\b|\by\b|\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b)"
-    x_or_y_found = r"(\bx\b|\by\b|\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b)"
-    xy_value = re.findall(r"-(\d)" + x_or_y, split_var[1])[0]
-    xy_variable = re.findall(r"-\d" + x_or_y_found, split_var[1])[0]
-    xy_string = re.findall(r"(-\d)" + x_or_y_found, split_var[1])[0]
+    checklist = split_var[1].split(' ')
+    for item in checklist:
+        found_xy = find_all_x_or_y(item)
+        found_numbers = find_all_numbers(item)
 
-    if len(split_var[0]) == 0:
-        var = re.sub(xy_string + r" =\s+(.*)", ' ')
-        var = re.sub(r"=", -int(xy_value) + xy_variable + " =")
-        return var
-    
-    elif len(split_var[0]) > 0:
-        var = re.sub(xy_string + r" =\s+(.*)", ' ')
-        var = re.sub(r"=",' + ' + -int(xy_value) + xy_variable + " =")
-        return var
+        if len(split_var[0]) == 0:
+            if len(split_var[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
+                var = var.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
+            else:
+                var = var.replace(checklist[item] + ' ' + checklist[item+1], '')
 
-    
-    else:
-        return var
+            split_var = var.split('=')
+            var = split_var[0] + str(-int(found_numbers)) + found_xy + split_var[1]
+            return var
+        
+        elif len(split_var[0]) > 0:
+            if len(split_var[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
+                var = var.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
+            else: 
+                var = var.replace(checklist[item] + ' ' + checklist[item+1], '')
+                
+            split_var = var.split('=')
+            var = split_var[0] + ' + ' + str(-int(found_numbers)) + found_xy + split_var[1]
+            return var
+
 
 
 def eval_x_and_or_y(var, split_var):
@@ -239,9 +263,7 @@ def eval_x_and_or_y(var, split_var):
             xy_string = f"{x_storage}x * {y_storage}y"
         else:
             xy_string = f"{x_storage}x + {y_storage}y"
-        split_var[0] = xy_string
-        var = split_var[0] + split_var[1]
-        return var
+        return xy_string
 
     elif 'x' in xy_string:
         for list_object in x_or_y:
@@ -251,16 +273,29 @@ def eval_x_and_or_y(var, split_var):
             digit_storage = re.findall(r"\b(-*\d*)\b" , xy_string[list_object])[0]
             digit_storage = int(digit_storage)
             xy_string[list_object] = f"{digit_storage + x_storage}x"
-        split_var[0] = xy_string
-        var = split_var[0] + split_var[1]
-        return var
+        return xy_string
     
     else:
         error(1)
 
-def solve_xy(var, split_var):
-    var = eval_x_and_or_y(var, split_var)
-    print(f"var = {var}")
+
+def solve_xy(var, split_var, original_var):
+    evaled_x_and_or_y = eval_x_and_or_y(var, split_var)
+    print(f"evaled_x&%y = {eval_x_and_or_y}")
+    if 'x' and 'y' in evaled_x_and_or_y:
+        pass
+    elif 'x' and not 'y' in evaled_x_and_or_y:
+        split_var[1] = split_var[1] + ' / ' + re.findall(r"\b(-*\d*)\b", eval_x_and_or_y)[0]
+        
+    else:
+        if split_var[1] == 0:
+            print(f'The solution of {original_var} is {split_var[1]} = 0\n')
+            exit(0)
+        elif split_var[1] != 0:
+            print(f'There are no solutions of {original_var}\n')
+            exit(0)
+        else:
+            error(1)
     #return var
 
 
@@ -290,15 +325,13 @@ def solve(var, split_var, original_var):
         var = number_mover(var, split_var)
         return var
 
-    elif len(re.findall(r'(x)', split_var[1])) > 0 or len(re.findall(r'(y)', split_var[1])) > 0:
+    elif len(re.findall(r'(x|y)+', split_var[1])) != 0:
         print('started')
         var = xy_mover(var, split_var)
         return var
 
     else:
-        var = solve_xy(var, split_var)
-        print(f'The solution of {original_var} is {split_var[1]} = {split_var[0]}\n')
-        exit(0)
+        solve_xy(var, split_var, original_var)
 
 
 def main():

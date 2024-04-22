@@ -36,3 +36,16 @@ var = var[:var.find(xy_string)] + '' +  var[var.find(xy_string) + len(xy_string)
 # Adds the opposite of the "x" value to the other side
 var = var[:var.find('=')] + '' + xy_value + xy_variable + ' ' + var[var.find('='):]
 return var
+
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    checklist = split_var[1].split(' ')
+    for item in checklist:
+        negative_symbol_found_in_var = False
+        x_or_y_found_in_var = False
+        integer_found = False
+        for integer in numbers:
+            if '-' in item:
+                negative_symbol_found_in_var = True
+            elif integer in item:
+                integer_found = True
+            elif 
