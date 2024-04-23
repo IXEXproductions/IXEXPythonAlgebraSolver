@@ -272,13 +272,13 @@ def solve(var, split_var, original_var):
         print(f'The solution of {original_var} is {split_var[1]} = {split_var[0]}\n')
         exit(0)
 
-
 def main():
-    print('Please enter an equation')
-    eq = input('>').lower()
-    original_eq = str(eq)
-    running = True
-    while running:
+    while True:
+        
+        print('Please enter an equation')
+        eq = input('>').lower()
+        original_eq = str(eq)
+
         if '=' in eq:
             split_eq = eq.split('=')
             eq = fix_equation(eq)
@@ -286,21 +286,19 @@ def main():
             print(eq, '\n')
             eq = solve(eq, split_eq, original_eq)
 
-
         elif 'quit' == eq.lower():
-            
-            exit(0)
-
+            break
+        elif 'exit' == eq.lower():
+            break
+        elif 'close' == eq.lower():
+            break
         else:
             # Executes When There Is An Error With Formatting
             print_statment = '''\nPlease follow the correct formatting structure. 
             \nIf your equation has only one variable, make sure the variable is set to "x". 
             \nIf it is a two variable equation set one variable to "x" and one to "y".
-            \nThere cannot be a space inbetween the chevron and your equation.
-            \nPress Enter to reset program'''
-            input(print_statment)
-            main()
-            exit(1)
+            \nThere cannot be a space inbetween the chevron and your equation.'''
+            print(print_statment)
 
 
 if __name__ == '__main__':
