@@ -24,28 +24,8 @@ x * x = 1
 >= 
 |x+y|
 
-x_or_y = r"(\bx\b|\by\b|\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b)"
-negative_x_or_y = r"(\b-x\b|\b-y\b|\b-x(?:[^\s]+)y\b|\b-y(?:[^\s]+)x\b|\b-x(?:[^\s]+)x\b|\b-y(?:[^\s]+)y\b|\b-xy\b|\b-yx\b)"
-
-xy_string = re.findall(r"(-\b\d\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-xy_variable = xy_value = re.findall(r"-\b\d\b" + negative_x_or_y, split_var[1])[0]
-xy_value = re.findall(r"-\b(\d)\b(?:" + negative_x_or_y + r")", split_var[1])[0]
-#var = re.sub(xy_string + r" =.*", -int(xy_string))
 # Removes the current "x" value on the right
 var = var[:var.find(xy_string)] + '' +  var[var.find(xy_string) + len(xy_string):]
 # Adds the opposite of the "x" value to the other side
 var = var[:var.find('=')] + '' + xy_value + xy_variable + ' ' + var[var.find('='):]
 return var
-
-numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    checklist = split_var[1].split(' ')
-    for item in checklist:
-        negative_symbol_found_in_var = False
-        x_or_y_found_in_var = False
-        integer_found = False
-        for integer in numbers:
-            if '-' in item:
-                negative_symbol_found_in_var = True
-            elif integer in item:
-                integer_found = True
-            elif 
