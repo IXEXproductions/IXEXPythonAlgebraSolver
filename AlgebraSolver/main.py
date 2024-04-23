@@ -1,3 +1,9 @@
+try:
+    import sympy
+except Exception as e:
+    print("Error with import, please install imports.")
+    print("Hint - \"pip install sympy\"")
+
 # Go through, then cleanup and add error codes! (After completed) #
 def fix_equation(var):
     if len(find(r'\b(x)\b', var)) > 0:
@@ -297,32 +303,55 @@ def solve(var, split_var, original_var):
         solve_xy(var, split_var, original_var)
 
 def main():
+    x = sympy.Symbol('x') #adds x as a python obj
+    y = sympy.Symbol('y') #adds y as a python obj
     while True:
         
         print('Please enter an equation')
         eq = input('>').lower()
-        original_eq = str(eq)
+        original_eq = str(eq).strip()
 
-        if '=' in eq:
-            split_eq = eq.split('=')
-            eq = fix_equation(eq)
-            print('eq')
-            print(eq, '\n')
-            eq = solve(eq, split_eq, original_eq)
+        try:
+            ex_eq = sympy.simplify(original_eq)
+            print(str(ex_eq)) ## do not make ex_eq a str, its a python opj right now
 
-        elif 'quit' == eq.lower():
-            break
-        elif 'exit' == eq.lower():
-            break
-        elif 'close' == eq.lower():
-            break
-        else:
-            # Executes When There Is An Error With Formatting
-            print_statment = '''\nPlease follow the correct formatting structure. 
-            \nIf your equation has only one variable, make sure the variable is set to "x". 
-            \nIf it is a two variable equation set one variable to "x" and one to "y".
-            \nThere cannot be a space inbetween the chevron and your equation.'''
-            print(print_statment)
+            if "x" in str(ex_eq) and "y" not in str(ex_eq):
+                # Solve for X
+                result = sympy.solve(ex_eq, x)
+                print(result)
+
+            if "y" in str(ex_eq) and "x" not in str(ex_eq):
+                # Solve for Y
+                result = sympy.solve(ex_eq, y)
+                print(result)
+            
+            if "x" in str(ex_eq) and "y" in str(ex_eq):
+                # Solve for X and Y
+                result = sympy.solve(ex_eq, x, y)
+                print(result)
+
+        except Exception as e:
+            print(str(e))
+            if '=' in eq:
+                split_eq = eq.split('=')
+                eq = fix_equation(eq)
+                print('eq')
+                print(eq, '\n')
+                eq = solve(eq, split_eq, original_eq)
+
+            elif 'quit' == eq.lower():
+                break
+            elif 'exit' == eq.lower():
+                break
+            elif 'close' == eq.lower():
+                break
+            else:
+                # Executes When There Is An Error With Formatting
+                print_statment = '''\nPlease follow the correct formatting structure. 
+                \nIf your equation has only one variable, make sure the variable is set to "x". 
+                \nIf it is a two variable equation set one variable to "x" and one to "y".
+                \nThere cannot be a space inbetween the chevron and your equation.'''
+                print(print_statment)
 
 
 if __name__ == '__main__':
