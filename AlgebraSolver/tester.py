@@ -1,8 +1,10 @@
-import re 
-string = 'xxyxxyxyxy yxxy yyx xy'
-x_or_y = r"(\bx\b|\by\b|\bx(?:[^\s]+)y\b|\by(?:[^\s]+)x\b|\bx(?:[^\s]+)x\b|\by(?:[^\s]+)y\b|\bxy\b|\byx\b)"
-found = re.findall(x_or_y, string)
-print(found)
-
-string = ' 6x '
-print(re.findall(r'\b\d*' + 'x', string))
+string = 'xy xyyx lol pineapplle xy'
+def find_all_xy(string):
+    return_string = ''
+    for char in string:
+        if char == "x":
+            return_string = return_string + char
+        elif char == "y": 
+            return_string = return_string + char
+    return return_string
+print(find_all_xy(string))
