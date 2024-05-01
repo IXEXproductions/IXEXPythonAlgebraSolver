@@ -123,10 +123,19 @@ def parantheses(string):
 
 
 def exponents(var):
+    """    for charecter in split_var[0]:
+        if split_var[0][find_location(charecter) + 1].isdigit():
+            if ' ' + charecter + split_var[0][find_location(charecter) + 1]:
+                moving_number.append(charecter)
+        elif charecter.isdigit() and not symbols in split_var[0][find_location(charecter) + 1]:
+            if ' ' + charecter in split_var[0]:
+                moving_number.append(charecter) 
+            elif ' -' + charecter in split_var[0]:
+                moving_number = moving_number.pop().append(moving_number[-1] + charecter)"""
     print('exponents loaded')
     if len(find('**', var)) > 0:
         print('working')
-        if len(find(r'\((.+?)\)\s\*{2}\s\((.+?)\)', var)) > 0:
+        if len('()**()') > 0:
             check = find(r'(\((.+?)\)\s\*{2}\s\((.+?)\))', var)[0]
             check = parantheses(check)
             check = parantheses(check)
@@ -265,18 +274,21 @@ def solve(var, original_var):
                     var = division(var)
                     return var     
                 
-        if len(find(r'\s*-*\b(\d+)\b\s*', split_var[0])) != 0:
+        elif len(find(r'\s*-*\b(\d+)\b\s*', split_var[0])) != 0:
             var = number_mover(var, split_var, x or y)
             return var
-
-        elif len(find(r'(x|y)+', split_var[1])) != 0:
-            print('started')
-            var = isolate_y(var, split_var)
-            return var
-
+        
         else:
-            pass
-
+            if 'y' in var:
+                if 'y' in split_var[1]:
+                    print('started')
+                    var = isolate_y(var, split_var)
+                    return var
+            elif 'x' in var:
+                pass
+            else:
+                print('No Solution')
+                exit(0)
 
     else:
         opj_var = sympy.simplify(original_var)
