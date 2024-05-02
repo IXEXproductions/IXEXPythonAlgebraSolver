@@ -1,3 +1,5 @@
+import re
+
 try:
     import sympy
 except Exception as e:
@@ -29,6 +31,7 @@ def find_all_xy(string):
         elif char == "y": 
             return_string = return_string + char
     return return_string
+
 
 def find_charecters_between_charecters(charecters_one, charecters_two, string):
     start_index = find_location(string, charecters_one)
@@ -123,39 +126,37 @@ def parantheses(string):
 
 
 def exponents(var):
-    """    for charecter in split_var[0]:
-        if split_var[0][find_location(charecter) + 1].isdigit():
-            if ' ' + charecter + split_var[0][find_location(charecter) + 1]:
-                moving_number.append(charecter)
-        elif charecter.isdigit() and not symbols in split_var[0][find_location(charecter) + 1]:
-            if ' ' + charecter in split_var[0]:
-                moving_number.append(charecter) 
-            elif ' -' + charecter in split_var[0]:
-                moving_number = moving_number.pop().append(moving_number[-1] + charecter)"""
     print('exponents loaded')
     if len(find('**', var)) > 0:
         print('working')
-        if len('()**()') > 0:
-            check = find(r'(\((.+?)\)\s\*{2}\s\((.+?)\))', var)[0]
+        if re.findall(r'(\((.+?)\)\s\*{2}\s\((.+?)\))', var)[0] in var:
+            check = re.findall(r'(\((.+?)\)\s\*{2}\s\((.+?)\))', var)[0]
+            original_check = check
             check = parantheses(check)
             check = parantheses(check)
-            var = var.replace(find(r'(\((.+?)\)\s\*{2}\s\((.+?)\))', var)[0], check)
+            var = var.replace(original_check, check)
             print('brackets left and right')
             return var
-        elif len(find(r'\((.+?)\)\s\*{2}\s', var)) > 0:
-            check = find(r'\((.+?)\)\s\*{2}\s', var)[0]
+        elif re.findall(r'\((.+?)\)\s\*{2}\s', var)[0] in var:
+            check = re.findall(r'\((.+?)\)\s\*{2}\s', var)[0]
+            original_check = check
             check = parantheses(check)
-            var = var.replace(find(r'\((.+?)\)\s\*{2}\s', var)[0], check)
+            var = var.replace(original_check, check)
             print('brackets left')
             return var
-        elif len(find(r'\s\*{2}\s\((.+?)\)', var)) > 0:
-            check = find(r'\s\*{2}\s\((.+?)\)', var)[0]
+        elif re.findall(r'\s\*{2}\s\((.+?)\)', var) in var:
+            check = re.findall(r'\s\*{2}\s\((.+?)\)', var)[0]
+            original_check = check
             check = parantheses(check)
-            var = var.replace(find(r'\s\*{2}\s\((.+?)\)', var)[0], check)
+            var = var.replace(original_check, check)
             print('brackets right')
             return var
-        else:
-            pass
+        elif len(re.findall(r'(\d+(?:x|y)*) \*{2} (\d+(?:x|y)*)', var)) > 0:
+            exponents_digit_value = re.findall(r'(-*\d+)(?:x|y)* \*{2} (-*\d+)(?:x|y)*', var)
+            exponents_variable = re.findall(r'-*\d+((?:x|y)*) \*{2} -*\d+((?:x|y)*)', var)
+            return exponents_digit_value[0] ** exponents_digit_value[1] + exponents_variable[0] ** exponents_variable[1]
+            
+                
 
 
 def number_mover(var, split_var, symbols):
