@@ -23,3 +23,33 @@ x * x = 1
 
 >= 
 |x+y|
+
+def getroot(string):
+    parantheses_check = []
+    for charecter in string:
+        if charecter in 'root()':
+            parantheses_check.append[charecter]
+            
+    parantheses_check = []
+    for charecter in string:
+        if charecter in 'root()':
+            parantheses_check.append[charecter]
+    for item in parantheses_check:
+        if '(' == parantheses_check[len(item) + 1]:
+            parantheses_check = parantheses_check.pop(item)
+        elif ')' == parantheses_check[len(item) + 1]:
+            if len(find(')', parantheses_check.pop(item))) == 0:
+                  for i, charecter in string:
+                    if charecter == ')':
+                        if counter == close_parantheses_popcounter + 1:
+                            result = string[find_location('(', string):i]
+                            return result
+                        else:
+                            counter += 1
+
+            else:
+                parantheses_check = parantheses_check.pop(item)
+                close_parantheses_popcounter += 1
+             
+def root(root, string):
+    result = getroot(string)

@@ -1,5 +1,3 @@
-import re
-
 try:
     import sympy
 except Exception as e:
@@ -33,6 +31,54 @@ def find_all_xy(string):
     return return_string
 
 
+def get_all_xy_var(string):
+    for char in string:
+        if char == "x":
+            while True:
+                counter += 1
+                if counter == 1:
+                    temp_string + char
+                elif counter == 1 and string[char + 1] == 'y':
+                    temp_string = temp_string + string[char + 1]
+                elif string[char - counter] in '-1234567890':
+                    temp_string = string[char - counter] + temp_string
+                else:
+                    break
+            xylist = xylist.append(temp_string)
+        elif char == "y": 
+            while True:
+                counter += 1
+                if counter == 1:
+                    temp_string + char
+                elif counter == 1 and string[char + 1] == 'x':
+                    temp_string = temp_string + string[char + 1]
+                elif string[char - counter] in '-1234567890':
+                    temp_string = string[char - counter] + temp_string
+                else:
+                    break
+        xylist = xylist.append(temp_string)
+    return xylist
+
+
+def get_all_numbers(string):
+    for char in string:
+        while True:
+            counter += 1
+            if counter == 1:
+                string.pop(string[char + counter])
+                string.pop(char)
+                temp_string = temp_string + char
+            elif string[char + counter] in '-1234567890':
+                string.pop(string[char + counter])
+                temp_string = temp_string + string[char + counter]
+            elif string[char - counter] in '-1234567890':
+                string.pop(string[char - counter])
+                temp_string = string[char - counter] + temp_string
+            else:
+                break
+        digits = digits.append(temp_string)
+
+
 def find_charecters_between_charecters(charecters_one, charecters_two, string):
     start_index = find_location(string, charecters_one)
     if start_index == False:
@@ -51,47 +97,47 @@ def find(charecter, string):
     return return_string
 
 
-def multiplication(var):
-    if len(find_location(' * ', var)) > 0:
-        multiplcation_equation_variable = find_charecters_between_charecters(' ', ' *', var) + ',' + find_charecters_between_charecters('* ', ' ', var)
-        multiplcation_equation_variable = multiplcation_equation_variable.split(',')
+def multiplication(string):
+    if len(find_location(' * ', string)) > 0:
+        multiplcation_equation_stringiable = find_charecters_between_charecters(' ', ' *', string) + ',' + find_charecters_between_charecters('* ', ' ', string)
+        multiplcation_equation_stringiable = multiplcation_equation_stringiable.split(',')
 
-        variable_0_variable_string = find_all_xy(multiplcation_equation_variable[0])
-        variable_1_variable_string = find_all_xy(multiplcation_equation_variable[1])
-        variable_0_number_value = find('-', multiplcation_equation_variable[0]) + find_all_numbers(multiplcation_equation_variable[0])
-        variable_1_number_value = find('-', multiplcation_equation_variable[0]) + find_all_numbers(multiplcation_equation_variable[1])
+        stringiable_0_stringiable_string = find_all_xy(multiplcation_equation_stringiable[0])
+        stringiable_1_stringiable_string = find_all_xy(multiplcation_equation_stringiable[1])
+        stringiable_0_number_value = find('-', multiplcation_equation_stringiable[0]) + find_all_numbers(multiplcation_equation_stringiable[0])
+        stringiable_1_number_value = find('-', multiplcation_equation_stringiable[0]) + find_all_numbers(multiplcation_equation_stringiable[1])
 
-        multiplication_equation = variable_0_number_value + variable_0_variable_string + ' * ' + variable_1_number_value + variable_1_variable_string
+        multiplication_equation = stringiable_0_number_value + stringiable_0_stringiable_string + ' * ' + stringiable_1_number_value + stringiable_1_stringiable_string
 
         if len(multiplication_equation) == 0:
-            var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
-            return var
+            string = string[:string.find(multiplication_equation)] + ' ' + str(int(stringiable_0_number_value) * int(stringiable_1_number_value)) + stringiable_0_stringiable_string + stringiable_1_stringiable_string + ' ' + string[string.find(multiplication_equation) + len(multiplication_equation):]
+            return string
         elif len(multiplication_equation) > 0:
-            var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) * int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
-            return var
+            string = string[:string.find(multiplication_equation)] + str(int(stringiable_0_number_value) * int(stringiable_1_number_value)) + stringiable_0_stringiable_string + stringiable_1_stringiable_string + ' ' + string[string.find(multiplication_equation) + len(multiplication_equation):]
+            return string
 
 
-def division(var):
-    if len(find_location(' / ', var)) > 0:
-        multiplcation_equation_variable = find_charecters_between_charecters(' ', ' /', var) + ',' + find_charecters_between_charecters('/ ', ' ', var)
-        multiplcation_equation_variable = multiplcation_equation_variable.split(',')
+def division(string):
+    if len(find_location(' / ', string)) > 0:
+        multiplcation_equation_stringiable = find_charecters_between_charecters(' ', ' /', string) + ',' + find_charecters_between_charecters('/ ', ' ', string)
+        multiplcation_equation_stringiable = multiplcation_equation_stringiable.split(',')
 
-        variable_0_variable_string = find_all_xy(multiplcation_equation_variable[0])
-        variable_1_variable_string = find_all_xy(multiplcation_equation_variable[1])
-        variable_0_number_value = find('-', multiplcation_equation_variable[0]) + find_all_numbers(multiplcation_equation_variable[0])
-        variable_1_number_value = find('-', multiplcation_equation_variable[0]) + find_all_numbers(multiplcation_equation_variable[1])
+        stringiable_0_stringiable_string = find_all_xy(multiplcation_equation_stringiable[0])
+        stringiable_1_stringiable_string = find_all_xy(multiplcation_equation_stringiable[1])
+        stringiable_0_number_value = find('-', multiplcation_equation_stringiable[0]) + find_all_numbers(multiplcation_equation_stringiable[0])
+        stringiable_1_number_value = find('-', multiplcation_equation_stringiable[0]) + find_all_numbers(multiplcation_equation_stringiable[1])
 
-        multiplication_equation = variable_0_number_value + variable_0_variable_string + ' / ' + variable_1_number_value + variable_1_variable_string
+        multiplication_equation = stringiable_0_number_value + stringiable_0_stringiable_string + ' / ' + stringiable_1_number_value + stringiable_1_stringiable_string
         
         if len(multiplication_equation) == 0:
-            var = var[:var.find(multiplication_equation)] + ' ' + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
-            return var
+            string = string[:string.find(multiplication_equation)] + ' ' + str(int(stringiable_0_number_value) / int(stringiable_1_number_value)) + stringiable_0_stringiable_string + stringiable_1_stringiable_string + ' ' + string[string.find(multiplication_equation) + len(multiplication_equation):]
+            return string
         elif len(multiplication_equation) > 0:
-            var = var[:var.find(multiplication_equation)] + str(int(variable_0_number_value) / int(variable_1_number_value)) + variable_0_variable_string + variable_1_variable_string + ' ' + var[var.find(multiplication_equation) + len(multiplication_equation):]
-            return var
-        
+            string = string[:string.find(multiplication_equation)] + str(int(stringiable_0_number_value) / int(stringiable_1_number_value)) + stringiable_0_stringiable_string + stringiable_1_stringiable_string + ' ' + string[string.find(multiplication_equation) + len(multiplication_equation):]
+            return string
 
-def parantheses(string):
+
+def getparan(string):
     parantheses_check = []
     for charecter in string:
         if charecter == '(' or charecter == ')':
@@ -100,214 +146,287 @@ def parantheses(string):
         if '(' == parantheses_check[len(item) + 1]:
             parantheses_check = parantheses_check.pop(item)
         elif ')' == parantheses_check[len(item) + 1]:
-            if len(find_location(')', parantheses_check.pop(item))) == 0:
-                for i, charecter in string:
+            if len(find(')', parantheses_check.pop(item))) == 0:
+                  for i, charecter in string:
                     if charecter == ')':
                         if counter == close_parantheses_popcounter + 1:
-                            check = string[find_location('(', string):i]
-                            original_check = check
-                            while True:
-                                modified_string = string.pop(find_location('(', string)).pop(i)
-                                if len(find('**', var)) > 0:
-                                    check = exponents(string)
-                                elif '(' in modified_string:
-                                    check = parantheses(modified_string)
-                                elif len(find('*', check)) > 0:
-                                    check = multiplication(check)
-                                elif len(find('/', check)) > 0:
-                                    check = division(check)
-                                else:
-                                    var = var.replace(original_check, check)
+                            result = string[find_location('(', string):i]
+                            return result
                         else:
                             counter += 1
+
             else:
                 parantheses_check = parantheses_check.pop(item)
                 close_parantheses_popcounter += 1
+    return ' '
 
 
-def exponents(var):
-    print('exponents loaded')
-    if len(find('**', var)) > 0:
-        print('working')
-        if re.findall(r'(\((.+?)\)\s\*{2}\s\((.+?)\))', var)[0] in var:
-            check = re.findall(r'(\((.+?)\)\s\*{2}\s\((.+?)\))', var)[0]
-            original_check = check
-            check = parantheses(check)
-            check = parantheses(check)
-            var = var.replace(original_check, check)
+def parantheses(string):
+    check = getparan(string)
+    original_check = check
+    while True:
+        modified_string = string.pop(string[0]).pop(string[-1])
+        if len(find('**', string)) > 0:
+            check = exponents(string)
+        elif '(' in modified_string:
+            check = parantheses(modified_string)
+        elif len(find('*', check)) > 0:
+            check = multiplication(check)
+        elif len(find('/', check)) > 0:
+            check = division(check)
+        else:
+            string = string.replace(original_check, check)
+
+
+def left_right_expontent_paranthese_check(string):
+    original_string = string
+    while True:
+        parantheses_set_one = getparan(string)
+        parantheses_set_two = getparan(string)
+        if find(f'{parantheses_set_one} ** {parantheses_set_two}') in string:
             print('brackets left and right')
-            return var
-        elif re.findall(r'\((.+?)\)\s\*{2}\s', var)[0] in var:
-            check = re.findall(r'\((.+?)\)\s\*{2}\s', var)[0]
-            original_check = check
-            check = parantheses(check)
-            var = var.replace(original_check, check)
+        elif find(f'{parantheses_set_one} **') in string:
             print('brackets left')
-            return var
-        elif re.findall(r'\s\*{2}\s\((.+?)\)', var) in var:
-            check = re.findall(r'\s\*{2}\s\((.+?)\)', var)[0]
-            original_check = check
-            check = parantheses(check)
-            var = var.replace(original_check, check)
+            string = string.pop(parantheses_set_two)
+        elif find(f'** {parantheses_set_two}') in string:
             print('brackets right')
-            return var
-        elif len(re.findall(r'(\d+(?:x|y)*) \*{2} (\d+(?:x|y)*)', var)) > 0:
-            exponents_digit_value = re.findall(r'(-*\d+)(?:x|y)* \*{2} (-*\d+)(?:x|y)*', var)
-            exponents_variable = re.findall(r'-*\d+((?:x|y)*) \*{2} -*\d+((?:x|y)*)', var)
-            return exponents_digit_value[0] ** exponents_digit_value[1] + exponents_variable[0] ** exponents_variable[1]
+            string = string.pop(parantheses_set_one)
+        else:
+            string = string.pop(parantheses_set_one).pop(parantheses_set_two)
+        if '(' not in string.pop(parantheses_set_one).pop(parantheses_set_two):
+            print('Breaking')
+            break
+    if find(f'{parantheses_set_one} ** {parantheses_set_two}') in string:
+        print('brackets left and right')
+        solved_parantheses_set_one = parantheses(parantheses_set_one)
+        solved_parantheses_set_two = parantheses(parantheses_set_two)
+        return original_string.replace(parantheses_set_one, solved_parantheses_set_one).replace(parantheses_set_two, solved_parantheses_set_two)
+    elif find(f'{parantheses_set_one} **') in string:
+        print('brackets left')
+        solved_parantheses_set_one = parantheses(parantheses_set_one)
+        return original_string.replace(parantheses_set_one, solved_parantheses_set_one)
+    elif find(f'** {parantheses_set_two}') in string:
+        print('brackets right')
+        solved_parantheses_set_two = parantheses(parantheses_set_two)
+        return original_string.replace(parantheses_set_two, solved_parantheses_set_two)
+    
+    
+def exponents(string):
+    print('exponents working')
+    string = left_right_expontent_paranthese_check(string)
+    original_string = string
+    print('initializingallxyvar')
+    all_xy_var = get_all_xy_var(string)
+    while True:
+        if find(f'{all_xy_var[0]} ** {all_xy_var[1]}') in string:
+            print('xy left and right')
+        elif find(f'{all_xy_var[0]} **') in string:
+            print('xy left')
+            string = string.pop(all_xy_var[1])
+            saved_left = all_xy_var[0]
+        elif find(f'** {all_xy_var[1]}') in string:
+            print('xy right')
+            string = string.pop(all_xy_var[0])
+            saved_right = all_xy_var[1]
+        else:
+            try:
+                string = string.pop(all_xy_var[0]).pop(all_xy_var[1])
+            except:
+                if len(saved_left) > 0:
+                    all_numbers = get_all_numbers(string)
+                    while True:
+                        if find(f'{saved_left} ** {all_numbers[1]}') in string:
+                            saved_left_digits = find('-') + find_all_numbers(saved_left)
+                            saved_left_xy = find_all_xy(saved_left)
+                            number = all_numbers[1]
+                            result = saved_left_digits ** number + saved_left_xy
+                            break
+                        else:
+                            all_numbers.pop(all_numbers[1])
+                elif len(saved_right) > 0:
+                    all_numbers = get_all_numbers(string)
+                    while True:
+                        if find(f'{all_numbers[1]} ** {saved_right}') in string:
+                            saved_right_digits = find('-') + find_all_numbers(saved_right)
+                            saved_right_xy = find_all_xy(saved_right)
+                            number = all_numbers[1]
+                            result = saved_right_digits ** number + saved_right_xy
+                            break
+                        else:
+                            all_numbers.pop(all_numbers[1])
+                else:
+                    string = str(original_string)
+                    all_numbers = get_all_numbers(string)
+                    if find(f'{all_numbers[0]} ** {all_numbers[1]}') in string:
+                        print('xy left and right')
+                    elif find(f'{all_numbers[0]} **') in string:
+                        print('xy left')
+                        string = string.pop(all_numbers[1])
+                        saved_left = all_numbers[0]
+                    elif find(f'** {all_numbers[1]}') in string:
+                        print('xy right')
+                        string = string.pop(all_numbers[0])
+                        saved_right = all_numbers[1]
+                    else:
+                        try:
+                            string = string.pop(all_xy_var[0]).pop(all_xy_var[1])
+                        except:
+                            result = saved_left ** saved_right
+                            break
+        while True:
+
+        return original_string.replace()
             
-                
 
-
-def number_mover(var, split_var, symbols):
-    for charecter in split_var[0]:
-        if split_var[0][find_location(charecter) + 1].isdigit():
-            if ' ' + charecter + split_var[0][find_location(charecter) + 1]:
+def number_mover(string, split_string, symbols):
+    for charecter in split_string[0]:
+        if split_string[0][find_location(charecter) + 1].isdigit():
+            if ' ' + charecter + split_string[0][find_location(charecter) + 1]:
                 moving_number.append(charecter)
-        elif charecter.isdigit() and not symbols in split_var[0][find_location(charecter) + 1]:
-            if ' ' + charecter in split_var[0]:
+        elif charecter.isdigit() and not symbols in split_string[0][find_location(charecter) + 1]:
+            if ' ' + charecter in split_string[0]:
                 moving_number.append(charecter) 
-            elif ' -' + charecter in split_var[0]:
+            elif ' -' + charecter in split_string[0]:
                 moving_number = moving_number.pop().append(moving_number[-1] + charecter)
     if len(moving_number) > 0:
         for item in  moving_number:
             if '0' in moving_number[0]:
                 # Removes the current value on the left
-                var = var[:var.find(moving_number[item])] + var[var.find(moving_number[item]) + len(moving_number[item]):]
+                string = string[:string.find(moving_number[item])] + string[string.find(moving_number[item]) + len(moving_number[item]):]
                 # Adds the the value to the other side
-                var = var[var.find('='):] + ' + ' + moving_number[item] + '' + var[:var.find('=')]
-                return var
+                string = string[string.find('='):] + ' + ' + moving_number[item] + '' + string[:string.find('=')]
+                return string
             else:
                 # Removes the current value on the left
-                var = var[:var.find(moving_number[item])] + var[var.find(moving_number[item]) + len(moving_number[item]):]
+                string = string[:string.find(moving_number[item])] + string[string.find(moving_number[item]) + len(moving_number[item]):]
                 # Adds the the value to the other side
-                var = var[var.find('='):] + ' + ' + -int(moving_number[item]) + '' + var[:var.find('=')]
-                return var
+                string = string[string.find('='):] + ' + ' + -int(moving_number[item]) + '' + string[:string.find('=')]
+                return string
             
 
-def isolate_y(var):
+def isolate_y(string):
     print('looking for y')
-    checklist = split_var[1].split(' ')
+    checklist = split_string[1].split(' ')
     try:
-        split_var = var.split('=')
-        if 'x' in split_var[0]:
-            isolate_x(var)
+        split_string = string.split('=')
+        if 'x' in split_string[0]:
+            isolate_x(string)
     finally:
         for item in checklist:
             found_y = find_location('y', item)
             found_numbers = found_numbers(item)
-            if len(split_var[0]) == 0:
-                if len(split_var[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
-                    var = var.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
+            if len(split_string[0]) == 0:
+                if len(split_string[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
+                    string = string.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
                 else:
-                    var = var.replace(checklist[item] + ' ' + checklist[item+1], '')
-                split_var = var.split('=')
-                var = split_var[0] + str(-int(found_numbers)) + found_y + split_var[1]
-                return var
-            elif len(split_var[0]) > 0:
-                if len(split_var[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
-                    var = var.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
+                    string = string.replace(checklist[item] + ' ' + checklist[item+1], '')
+                split_string = string.split('=')
+                string = split_string[0] + str(-int(found_numbers)) + found_y + split_string[1]
+                return string
+            elif len(split_string[0]) > 0:
+                if len(split_string[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
+                    string = string.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
                 else: 
-                    var = var.replace(checklist[item] + ' ' + checklist[item+1], '')
-                split_var = var.split('=')
-                var = split_var[0] + ' + ' + str(-int(found_numbers)) + found_y + split_var[1]
-                return var
+                    string = string.replace(checklist[item] + ' ' + checklist[item+1], '')
+                split_string = string.split('=')
+                string = split_string[0] + ' + ' + str(-int(found_numbers)) + found_y + split_string[1]
+                return string
 
 
-def isolate_x(var):
-    checklist = split_var[1].split(' ')
+def isolate_x(string):
+    checklist = split_string[1].split(' ')
     for item in checklist:
         found_x = find_location('x', item)
         found_numbers = found_numbers(item)
-        if len(split_var[0]) == 0:
-            if len(split_var[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
-                var = var.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
+        if len(split_string[0]) == 0:
+            if len(split_string[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
+                string = string.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
             else:
-                var = var.replace(checklist[item] + ' ' + checklist[item+1], '')
-            split_var = var.split('=')
-            var = split_var[0] + str(-int(found_numbers)) + found_x + split_var[1]
-            return var
-        elif len(split_var[0]) > 0:
-            if len(split_var[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
-                var = var.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
+                string = string.replace(checklist[item] + ' ' + checklist[item+1], '')
+            split_string = string.split('=')
+            string = split_string[0] + str(-int(found_numbers)) + found_x + split_string[1]
+            return string
+        elif len(split_string[0]) > 0:
+            if len(split_string[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
+                string = string.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
             else: 
-                var = var.replace(checklist[item] + ' ' + checklist[item+1], '')
-            split_var = var.split('=')
-            var = split_var[0] + ' + ' + str(-int(found_numbers)) + found_x + split_var[1]
-            return var
+                string = string.replace(checklist[item] + ' ' + checklist[item+1], '')
+            split_string = string.split('=')
+            string = split_string[0] + ' + ' + str(-int(found_numbers)) + found_x + split_string[1]
+            return string
 
 
-def solve(var, original_var):
+def solve(string, original_string):
 
     x = sympy.Symbol('x')
     y = sympy.Symbol('y')
 
-    if '=' in var:
-        split_var = var.split('=')
+    if '=' in string:
+        split_string = string.split('=')
 
         print('eq')
-        print(var, '\n')
+        print(string, '\n')
 
-        if 'x' in var and not 'y' in var:
-            if sympy.solve(split_var[0], x) == sympy.solve(split_var[1], x):
-                result = f'The result of {original_var} is x = {sympy.solve(split_var[0], x)[0]}'
+        if 'x' in string and not 'y' in string:
+            if sympy.solve(split_string[0], x) == sympy.solve(split_string[1], x):
+                result = f'The result of {original_string} is x = {sympy.solve(split_string[0], x)[0]}'
 
-        elif 'y' in var and not 'x' in var:
-            if sympy.solve(split_var[0], y) == sympy.solve(split_var[1], y):
-                result = f'The result of {original_var} is y = {sympy.solve(split_var[0], y)[0]}'
+        elif 'y' in string and not 'x' in string:
+            if sympy.solve(split_string[0], y) == sympy.solve(split_string[1], y):
+                result = f'The result of {original_string} is y = {sympy.solve(split_string[0], y)[0]}'
 
-        elif 'x' and 'y' in var:
-            parantheses_check = len(find(r'\((.+?)\)', var)) 
-            exponents_check = len(find(r'\s(\*{2})\s', var))
-            multiplication_check = len(find(r'\s\*\s', var))
-            division_check = len(find(r'\s\/\s', var))
+        elif 'x' and 'y' in string:
+            parantheses_check = len(find(r'\((.+?)\)', string)) 
+            exponents_check = len(find(r'\s(\*{2})\s', string))
+            multiplication_check = len(find(r'\s\*\s', string))
+            division_check = len(find(r'\s\/\s', string))
             while parantheses_check and exponents_check and multiplication_check and division_check > 0:
                 if parantheses_check > 0:
-                    var = parantheses(var)
-                    return var
+                    string = parantheses(string)
+                    return string
                 elif exponents_check > 0:
-                    var = exponents(var)
-                    return var
+                    string = exponents(string)
+                    return string
                 elif multiplication_check > 0:
-                    var = multiplication(var)
-                    return var
+                    string = multiplication(string)
+                    return string
                 elif division_check > 0:
-                    var = division(var)
-                    return var     
+                    string = division(string)
+                    return string     
                 
-        elif len(find(r'\s*-*\b(\d+)\b\s*', split_var[0])) != 0:
-            var = number_mover(var, split_var, x or y)
-            return var
+        elif len(find(r'\s*-*\b(\d+)\b\s*', split_string[0])) != 0:
+            string = number_mover(string, split_string, x or y)
+            return string
         
         else:
-            if 'y' in var:
-                if 'y' in split_var[1]:
+            if 'y' in string:
+                if 'y' in split_string[1]:
                     print('started')
-                    var = isolate_y(var, split_var)
-                    return var
-            elif 'x' in var:
+                    string = isolate_y(string, split_string)
+                    return string
+            elif 'x' in string:
                 pass
             else:
                 print('No Solution')
                 exit(0)
 
     else:
-        opj_var = sympy.simplify(original_var)
-        print(str(opj_var)) ## do not make opj_var a str, its a python opj right now
+        opj_string = sympy.simplify(original_string)
+        print(str(opj_string)) ## do not make opj_string a str, its a python opj right now
 
-        if 'x' in str(opj_var) and 'y' not in str(opj_var):
+        if 'x' in str(opj_string) and 'y' not in str(opj_string):
             # Solve for "x"
-            result = sympy.solve(opj_var, x)
+            result = sympy.solve(opj_string, x)
             print(result)
 
-        if 'y' in str(opj_var) and 'x' not in str(opj_var):
+        if 'y' in str(opj_string) and 'x' not in str(opj_string):
             # Solve for "y"
-            result = sympy.solve(opj_var, y)
+            result = sympy.solve(opj_string, y)
             print(result)
         
-        if 'x' in str(opj_var) and 'y' in str(opj_var):
+        if 'x' in str(opj_string) and 'y' in str(opj_string):
             # Solve for "x" and "y"
-            result = sympy.solve(opj_var, x, y)
+            result = sympy.solve(opj_string, x, y)
             print(result)
 
 

@@ -1,17 +1,8 @@
-import os
-import time
-
-os.system("cls")
-
 try:
     import sympy
 except Exception as e:
     print('Error with import, please install imports.')
     print('Hint - \'pip install sympy\'')
-
-def simplify(original_var):
-    obj_var = sympy.simplify(original_var)
-    return obj_var
 
 def change_var(original_var, int_var, change):
     output_var = str(original_var).replace(str(int_var), f"{change}")
@@ -38,7 +29,7 @@ def change_x_y(obj_var, intinputx, intinputy, addorremove):
 
 def pre_solver(original_var, x, y):
     try:
-        obj_var = simplify(original_var)
+        obj_var = sympy.simplify(original_var)
         ## do not make obj_var a str, its a python obj right now
 
         if 'x' in str(obj_var) and 'y' not in str(obj_var):
@@ -57,7 +48,7 @@ def pre_solver(original_var, x, y):
             result = obj_var
 
     except Exception as e:
-        print(f"Any Error as happened: {str(e)}")
+        print(f"An Error as happened: {str(e)}")
         result = obj_var
     
     return result
@@ -65,8 +56,7 @@ def pre_solver(original_var, x, y):
 
 def solve(var, original_var):
     # x ** (2) = 9
-    temp_var_str_print = ""
-
+    
     x = sympy.Symbol('x')
     y = sympy.Symbol('y')
     if '=' in var:
@@ -135,13 +125,13 @@ def solve(var, original_var):
                     print(f"Checking {math_list_temp[i]} vs {math_list_temp[i + 1]}")
                     if math_list_temp[i] == math_list_temp[i + 1]:
                         result = f"{math_list_temp[i]} = {math_list_temp[i + 1]}"
-                        found_math_yes = True
+                        found_math = True
                         break
                     else:
-                        found_math_yes = False
+                        found_math = False
                         pass
                 
-                if found_math_yes:
+                if found_math:
                     break
                 else:
                     raise Exception
@@ -180,3 +170,4 @@ if __name__ == '__main__':
 # x * xy = x ** x * y 
 # xy / x = y
 # x ** x = 0
+# y * 5 = x * 15 + 10
