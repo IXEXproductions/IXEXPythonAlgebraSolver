@@ -185,6 +185,7 @@ def left_right_expontent_paranthese_check(string):
         parantheses_set_two = getparan(string)
         if find(f'{parantheses_set_one} ** {parantheses_set_two}') in string:
             print('brackets left and right')
+            pass
         elif find(f'{parantheses_set_one} **') in string:
             print('brackets left')
             string = string.pop(parantheses_set_two)
@@ -273,9 +274,33 @@ def exponents(string):
                         except:
                             result = saved_left ** saved_right
                             break
-        while True:
-
-        return original_string.replace()
+        string = str(original_string)
+        variable = []
+        for char in string:
+            if char == '*':
+                if string[char - 1] + char + string[char + 1] + string[char + 2] == ' ** ':
+                    temp_list = []
+                    counter = 1
+                    while True:
+                        counter += 1
+                        if string[char - counter] in '-1234567890xy':
+                            temp_list.replace(temp_list[0], temp_list[0] + string[char - counter])
+                        else: 
+                            break
+                    counter = 2
+                    temp_list.append('')
+                    while True:
+                        counter += 1
+                        if string[char + counter] in '-1234567890xy':
+                            temp_list.replace(temp_list[1], temp_list[1] + string[char - counter])
+                        else: 
+                            break
+                    variable = variable.append(temp_list)
+            else:
+                pass
+        variable_one = variable[0][0]
+        variable_two = variable[0][1]
+        return original_string.replace(f'{variable_one} ** {variable_two}', result)
             
 
 def number_mover(string, split_string, symbols):
