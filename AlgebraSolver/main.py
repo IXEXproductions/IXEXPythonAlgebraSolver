@@ -329,7 +329,7 @@ def number_mover(string, split_string, symbols):
                 return string
             
 
-def isolate_y(string):
+def isolate_y(string, split_string):
     print('looking for y')
     checklist = split_string[1].split(' ')
     try:
@@ -358,11 +358,11 @@ def isolate_y(string):
                 return string
 
 
-def isolate_x(string):
+def isolate_x(string, split_string):
     checklist = split_string[1].split(' ')
     for item in checklist:
-        found_x = find_location('x', item)
-        found_numbers = found_numbers(item)
+        found_x = find('x', item)
+        found_numbers = find_all_numbers(item)
         if len(split_string[0]) == 0:
             if len(split_string[1].replace(checklist[item] + ' ' + checklist[item+1], '')) > 0:
                 string = string.replace(checklist[item] + ' ' + checklist[item+1] + ' ', '')
@@ -381,86 +381,70 @@ def isolate_x(string):
             return string
 
 
-def solve(string, original_string):
-
+def solve(string):
+    print('solve initalized')
     x = sympy.Symbol('x')
     y = sympy.Symbol('y')
 
-    if '=' in string:
-        split_string = string.split('=')
+    if '=' not in string:
+        print('no =')
+        string = f'{string} = {string}'
 
-        print('eq')
-        print(string, '\n')
+    split_string = string.split('=')
 
-        if 'x' in string and not 'y' in string:
-            if sympy.solve(split_string[0], x) == sympy.solve(split_string[1], x):
-                result = f'The result of {original_string} is x = {sympy.solve(split_string[0], x)[0]}'
+    print('eq')
+    print(string, '\n')
 
-        elif 'y' in string and not 'x' in string:
-            if sympy.solve(split_string[0], y) == sympy.solve(split_string[1], y):
-                result = f'The result of {original_string} is y = {sympy.solve(split_string[0], y)[0]}'
-
-        elif 'x' and 'y' in string:
-            parantheses_check = len(find(r'\((.+?)\)', string)) 
-            exponents_check = len(find(r'\s(\*{2})\s', string))
-            multiplication_check = len(find(r'\s\*\s', string))
-            division_check = len(find(r'\s\/\s', string))
-            while parantheses_check and exponents_check and multiplication_check and division_check > 0:
-                if parantheses_check > 0:
-                    string = parantheses(string)
-                    return string
-                elif exponents_check > 0:
-                    string = exponents(string)
-                    return string
-                elif multiplication_check > 0:
-                    string = multiplication(string)
-                    return string
-                elif division_check > 0:
-                    string = division(string)
-                    return string     
-                
+    parantheses_check = len(find(r'\((.+?)\)', string)) 
+    exponents_check = len(find(r'\s(\*{2})\s', string))
+    multiplication_check = len(find(r'\s\*\s', string))
+    division_check = len(find(r'\s\/\s', string))
+    check = '(' or ')' or '*' or '/'
+    while check not in string:
+        if parantheses_check > 0:
+            string = parantheses(string)
+            print(string)
+            return string
+        elif exponents_check > 0:
+            string = exponents(string)
+            print(string)
+            return string
+        elif multiplication_check > 0:
+            string = multiplication(string)
+            print(string)
+            return string
+        elif division_check > 0:
+            string = division(string)
+            print(string)
+            return string     
+        
         elif len(find(r'\s*-*\b(\d+)\b\s*', split_string[0])) != 0:
             string = number_mover(string, split_string, x or y)
+            print(string)
             return string
-        
+
         else:
             if 'y' in string:
                 if 'y' in split_string[1]:
                     print('started')
                     string = isolate_y(string, split_string)
-                    return string
+                    print(string)
+                    exit(1)
+                exit(1)
             elif 'x' in string:
-                pass
+                string = isolate_x(string, split_string)
+                print(string)
+                exit(1)
             else:
                 print('No Solution')
                 exit(0)
-
-    else:
-        opj_string = sympy.simplify(original_string)
-        print(str(opj_string)) ## do not make opj_string a str, its a python opj right now
-
-        if 'x' in str(opj_string) and 'y' not in str(opj_string):
-            # Solve for "x"
-            result = sympy.solve(opj_string, x)
-            print(result)
-
-        if 'y' in str(opj_string) and 'x' not in str(opj_string):
-            # Solve for "y"
-            result = sympy.solve(opj_string, y)
-            print(result)
-        
-        if 'x' in str(opj_string) and 'y' in str(opj_string):
-            # Solve for "x" and "y"
-            result = sympy.solve(opj_string, x, y)
-            print(result)
 
 
 def main():
     while True:
         
         print('Please enter an equation')
-        eq = input('>').lower().strip()
-        original_eq = str(eq)
+        eq = input('> ').lower().strip()
 
         if 'quit' == eq.lower():
             break
@@ -472,7 +456,7 @@ def main():
             break
 
         else:
-            solve(eq, original_eq)
+            solve(eq)
 
 
 if __name__ == '__main__':
